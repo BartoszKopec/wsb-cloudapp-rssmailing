@@ -17,11 +17,13 @@ namespace Application.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetPreview([FromQuery] string email, CancellationToken token = default)
 		{
+			return null;
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Send([FromBody] MailingRequestBody body, CancellationToken token = default)
 		{
+			return null;
 		}
 
 	}

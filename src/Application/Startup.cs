@@ -15,7 +15,10 @@ namespace Application
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
-			services.AddRazorPages();
+			services.AddRazorPages((config)=>
+			{
+				config.RootDirectory = "/Client/Pages";
+			});
 			services.AddServerSideBlazor();
 		}
 

@@ -17,11 +17,13 @@ namespace Application.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetList([FromQuery]string email, CancellationToken token=default)
 		{
+			return null;
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> InsertRss([FromBody]RssRequestBody body, CancellationToken token=default)
+		public async Task<IActionResult> InsertRss([FromBody]object body, CancellationToken token=default)
 		{
+			return null;
 		}
 	}
 }

@@ -1,0 +1,36 @@
+﻿html{height:100%;}
+body {
+    margin: 0px;
+    padding: 16px;
+    width:100%;
+    box-sizing:border-box;
+    height:100%;
+}
+tr,td{padding:0px;}
+
+.h-100{height:100%;}
+.h-70{height:70%;}
+.w-100 {
+    width: 100%;
+}
+.w-50 {
+    width: 50%;
+}
+
+.display-row {
+    display: flex;
+}
+
+.m-l0-ra {
+    margin-left: 0px;
+    margin-right: auto;
+}
+.m-la-r0 {
+    margin-left: auto;
+    margin-right: 0px;
+}
+.m-r0{margin-right:0px;}
+.m-r8{margin-right:8px;}
+.m-l0{margin-left:0px;}
+
+.p-16{padding:16px;}
