@@ -11,6 +11,7 @@ namespace Application
 		{
 			public const string API_ADDRESS = "API_ADDRESS";
 			public const string PORT = "PORT";
+			public const string MAILING_KEY = "MAILING_KEY";
 		}
 
 		public const string ROUTE_API_RSS = "api/rss";

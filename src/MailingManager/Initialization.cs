@@ -10,9 +10,8 @@ namespace MailingManager
 {
 	public static class Initialization
 	{
-		public static IServiceCollection AddEmailSender(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection AddEmailSender(this IServiceCollection services, string key)
 		{
-			string key = configuration[$"EmailSender:Key"];
 			services.AddScoped<IEmailSender>((sp) => new SendGridImplementation(key));
 			return services;
 		}

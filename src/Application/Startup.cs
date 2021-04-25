@@ -7,6 +7,7 @@ using MailingManager;
 using HttpService;
 using Microsoft.Extensions.Configuration;
 using Application.Services;
+using System;
 
 namespace Application
 {
@@ -23,7 +24,7 @@ namespace Application
 		{
 			services.AddHttp();
 			services.AddDatabase(Configuration);
-			services.AddEmailSender(Configuration);
+			services.AddEmailSender(Environment.GetEnvironmentVariable(Constants.ENVVAR.MAILING_KEY));
 			services.AddSingleton<ApiClient>();
 
 			services.AddControllers();
