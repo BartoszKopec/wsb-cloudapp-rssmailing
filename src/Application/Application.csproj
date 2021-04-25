@@ -8,4 +8,15 @@
     <None Remove="wwwroot\css\site.css" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseManager\DatabaseManager.csproj" />
+    <ProjectReference Include="..\HtmlService\HtmlService.csproj" />
+    <ProjectReference Include="..\HttpService\HttpService.csproj" />
+    <ProjectReference Include="..\MailingManager\MailingManager.csproj" />
+  </ItemGroup>
+
 </Project>

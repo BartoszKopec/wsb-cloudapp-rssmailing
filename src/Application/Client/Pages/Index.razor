@@ -1,30 +1,34 @@
 ﻿@page "/"
 
-<button>Save</button>
-<button>Preview</button>
-<button>Send</button>
-<br />
-<br />
+<div>
+    <p>Last status:</p>
+    <p class="@_messageType">@_message</p>
+</div>
+
+<div class="p">
+    <button @onclick="SaveData">Save</button>
+    <button @onclick="GetPreview">Preview</button>
+    <button @onclick="SendEmail">Send</button>
+</div>
 <div class="w-100 display-row h-70">
-    <div class="w-50 m-l0-ra p-16 h-100">
-        <input placeholder="example@email.com" type="email" class="w-100" />
-        <br />
-        <br />
-        <iframe class="w-100 h-100"></iframe>
-    </div>
-    <div class="w-50 m-la-r0 p-16">
+    <div class="w-50 m-l0-ra h-100 p">
         <div class="w-100 display-row">
-            <input placeholder="https://example.site/rss.xml" type="url" class="m-r8 w-100" />
-            <button class="m-la-r0">Add</button>
+            <input placeholder="example@email.com" type="email" class="m-r8 w-100" @bind-value="_email"/>
+            <button class="m-la-r0" @onclick="GetFeeds">Get</button>
+        </div>
+        <br />
+        <br />
+        <iframe class="w-100 h-100" src="@_previewSource"></iframe>
+    </div>
+    <div class="w-50 m-la-r0 p">
+        <div class="w-100 display-row">
+            <input placeholder="https://example.site/rss.xml" type="url" class="m-r8 w-100" @bind-value="@_feed"/>
+            <button class="m-la-r0" @onclick="AddFeed">Add</button>
         </div>
         <br />
         <br />
         <table class="w-100">
-            <tr><td>rss url</td></tr>
-            <tr><td>rss url</td></tr>
-            <tr><td>rss url</td></tr>
-            <tr><td>rss url</td></tr>
-            <tr><td>rss url</td></tr>
+            @((MarkupString)_listing)
         </table>
     </div>
 </div>

@@ -11,10 +11,12 @@
     "Application": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "API_ADDRESS": "http://localhost:8080",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "PORT": "8080"
       },
       "dotnetRunMessages": "true",
-      "applicationUrl": "https://localhost;http://localhost"
+      "applicationUrl": ""
     }
   }
 }

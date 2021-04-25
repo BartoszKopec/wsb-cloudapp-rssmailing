@@ -1,7 +1,11 @@
-﻿html{height:100%;}
+﻿:root{
+    --default-margin: 16px;
+}
+
+html{height:100%;}
 body {
     margin: 0px;
-    padding: 16px;
+    padding: var(--default-margin);
     width:100%;
     box-sizing:border-box;
     height:100%;
@@ -33,4 +37,19 @@ tr,td{padding:0px;}
 .m-r8{margin-right:8px;}
 .m-l0{margin-left:0px;}
 
-.p-16{padding:16px;}
+.p {
+    padding: var(--default-margin);
+}
+.pr {
+    padding-right: var(--default-margin);
+}
+.pl {
+    padding-left: var(--default-margin);
+}
+
+.error{
+    color:red;
+}
+.success {
+    color: blue;
+}

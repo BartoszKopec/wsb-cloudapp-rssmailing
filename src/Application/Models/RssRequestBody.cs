@@ -5,7 +5,14 @@ using System.Threading.Tasks;
 
 namespace Application.Models
 {
-	internal class RssRequestBody
+	public class RssRequestBody : ModelBase
 	{
+		public string AddressEmail { get; set; }
+		public List<string> Urls { get; set; } = new List<string>();
+
+		public override bool IsValid()
+		{
+			return !string.IsNullOrWhiteSpace(AddressEmail);
+		}
 	}
 }
