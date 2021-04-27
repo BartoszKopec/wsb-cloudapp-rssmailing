@@ -23,7 +23,7 @@ namespace Application
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddHttp();
-			services.AddDatabase(Configuration);
+			services.AddDatabase(Environment.GetEnvironmentVariable(Constants.ENVVAR.CONNECTION_STRING));
 			services.AddEmailSender(Environment.GetEnvironmentVariable(Constants.ENVVAR.MAILING_KEY));
 			services.AddSingleton<ApiClient>();
 
