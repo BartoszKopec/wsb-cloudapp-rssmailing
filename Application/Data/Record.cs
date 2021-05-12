@@ -1,10 +1,8 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace DatabaseManager.Models
+namespace Application.Data
 {
 	public class Record<TId>
 	{

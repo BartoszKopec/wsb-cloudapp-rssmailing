@@ -1,11 +1,15 @@
-﻿using Application.Controllers;
+﻿using Application;
+using Application.Controllers;
+using Application.Data;
 using Application.Models;
 using Application.Resources;
-using DatabaseManager.Models;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
 using Xunit;
 
@@ -64,10 +68,13 @@ namespace Tests.Units.Controllers
 			{
 				Id = "1",
 				AddressEmail = "foobar",
-				RssSources = new List<string> { "url" }
-			};
-			Type expectedType = typeof(ContentResult);
+				RssSources = new List<string> { "http://foo.com/bar" }
+			}; 
 			CommonInit(records: record);
+
+			Type expectedType = typeof(ContentResult);
+			string expectedContent = $"<div><table><tr><td>{record.RssSources[0]} {Strings.UNAVAILABLE_FEED}</td></tr></table></div>";
+			int expectedStatus = 200;
 
 			//Act
 			IActionResult actionResult = Controller.GetPreviewAsync("foobar", _token).Result;
@@ -75,7 +82,10 @@ namespace Tests.Units.Controllers
 			//Assert
 			Assert.IsType(expectedType, actionResult);
 			ContentResult result = actionResult as ContentResult;
-			//TODO: html validation
+
+			Assert.Equal(expectedStatus, result.StatusCode);
+			Assert.Equal(Constants.CONTENTTYPE_HTML, result.ContentType);
+			Assert.Equal(expectedContent, result.Content);
 		}
 
 		[Theory]
@@ -111,7 +121,7 @@ namespace Tests.Units.Controllers
 			{
 				Id = "1",
 				AddressEmail = "foobar",
-				RssSources = new List<string> { "url" }
+				RssSources = new List<string> { "http://foo.com/bar" }
 			};
 			MailingRequestBody requestBody = new MailingRequestBody
 			{
@@ -131,7 +141,8 @@ namespace Tests.Units.Controllers
 		public void Send_WhenMail_NotExists()
 		{
 			//Arrange
-			Type expectedType = typeof(NotFoundObjectResult);
+			Type expectedResultType = typeof(NotFoundObjectResult);
+			Type expectedMessageObjectType = typeof(Error);
 			CommonInit();
 
 			//Act
@@ -142,21 +153,32 @@ namespace Tests.Units.Controllers
 			IActionResult result = Controller.SendAsync(requestBody, _token).Result;
 
 			//Assert
-			Assert.IsType(expectedType, result);
+			Assert.IsType(expectedResultType, result);
 			NotFoundObjectResult notFound = result as NotFoundObjectResult;
-			//TODO: error msg validation
+			Assert.NotNull(notFound.Value);
+			Assert.IsType(expectedMessageObjectType, notFound.Value);
+			Error error = notFound.Value as Error;
+			Assert.Equal(Strings.ERROR_MAIL_NOTFIGURED, error.Message);
 		}
 
-		protected void CommonInit(params Record<string>[] records)
+		protected override void CommonInit(params Record<string>[] records)
 		{
 			_database = new DatabaseStringIdMock();
-			if(records!=null)
+			if (records != null)
 			{
 				_database.Records = records.ToList();
 			}
 			_sender = new SenderMock();
-			_http = new HttpMock();
-			_http.MockContent = "<rss><channel><item><title>Tytul 1</title><description>Opis 1</description></item><item><title>Tytul 2</title><description>Opis 2</description></item><item><title>Tytul 3</title><description>Opis 3</description></item></channel></rss>";
+			Mock<HttpClient> mockHttp = new Mock<HttpClient>();
+			mockHttp.Setup((s) => s.SendAsync(new HttpRequestMessage(HttpMethod.Get, It.IsAny<string>()), It.IsAny<CancellationToken>()).Result)
+				.Returns(new HttpResponseMessage
+				{
+					StatusCode = System.Net.HttpStatusCode.OK,
+					Content = new StringContent(
+						"<rss><channel><item><title>Tytul 1</title><description>Opis 1</description></item><item><title>Tytul 2</title><description>Opis 2</description></item><item><title>Tytul 3</title><description>Opis 3</description></item></channel></rss>",
+						Encoding.UTF8, Application.Constants.CONTENTTYPE_JSON)
+				});
+			_http = mockHttp.Object;
 			Controller = new MailingController(_database, _sender, _http);
 		}
 	}

@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace DatabaseManager
+namespace Application.Data
 {
 	public class DatabaseManagerException : Exception
 	{
 		public const string SETTINGS_MISSING = "Database settings are missing in configuration file.";
 
-		public DatabaseManagerException(string message) : base(message){}
+		public DatabaseManagerException(string message) : base(message) { }
 	}
 }

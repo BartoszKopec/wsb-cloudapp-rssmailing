@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HtmlService;
+﻿using Application.Models;
+using Application.Services;
 using Xunit;
 
 namespace Tests.Units.Services

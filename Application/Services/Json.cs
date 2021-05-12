@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Application.Services
 {
 	public class Json
 	{
-		private static JsonSerializerSettings _settings = new JsonSerializerSettings
+		private static readonly JsonSerializerSettings _settings = new JsonSerializerSettings
 		{
+			NullValueHandling = NullValueHandling.Ignore
 		};
 
 		public static string Serialize(object obj)

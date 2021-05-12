@@ -1,9 +1,6 @@
-﻿using MailingManager;
-using MailingManager.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Application.Models;
+using Application.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,9 +8,10 @@ namespace Tests.Units
 {
 	public class SenderMock : IEmailSender
 	{
-		public Task<bool> SendEmailAsync(Email email, CancellationToken token)
+		public async Task<IActionResult> SendEmailAsync(EmailSenderModel email, CancellationToken token)
 		{
-			return Task.FromResult(true);
+			await Task.Delay(50, token);
+			return new OkObjectResult(new MailingResponseBody { Status = true });
 		}
 	}
 }

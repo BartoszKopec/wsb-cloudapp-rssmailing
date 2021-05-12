@@ -1,16 +1,14 @@
-﻿using DatabaseManager.Models;
+﻿using Application.Data;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DatabaseManager
+namespace Application.Services
 {
 	public class DatabaseMongo : IDatabase<string>
 	{
@@ -31,7 +29,7 @@ namespace DatabaseManager
 		public async Task<Record<string>> GetAsyncBy(Func<Record<string>, bool> predicate, CancellationToken token)
 		{
 			IAsyncCursor<Record<string>> cursor = await _collection.FindAsync(new BsonDocument(), cancellationToken: token);
-			if(cursor is null)
+			if (cursor is null)
 			{
 				return null;
 			}
@@ -48,7 +46,7 @@ namespace DatabaseManager
 				RssSources = dbRecord.RssSources
 			};
 		}
-		
+
 		public Task<Record<string>> GetAsync(string id, CancellationToken token)
 		{
 			return GetAsyncBy((r) => r.Id == id, token);
@@ -56,7 +54,7 @@ namespace DatabaseManager
 
 		public async Task<bool> AddAsync(Record<string> record, CancellationToken token)
 		{
-			if(await GetAsyncBy((r)=> r.Id == record.Id || r.AddressEmail == record.AddressEmail, token) != null)
+			if (await GetAsyncBy((r) => r.Id == record.Id || r.AddressEmail == record.AddressEmail, token) != null)
 			{
 				return false;
 			}
@@ -66,11 +64,11 @@ namespace DatabaseManager
 				{
 					AddressEmail = record.AddressEmail,
 					RssSources = record.RssSources
-				}, 
+				},
 				options: new InsertOneOptions
 				{
 					BypassDocumentValidation = true
-				}, 
+				},
 				token);
 			return true;
 		}

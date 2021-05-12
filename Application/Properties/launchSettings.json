@@ -11,8 +11,9 @@
     "Application": {
       "commandName": "Project",
       "environmentVariables": {
+        "CONNECTION_STRING": "mongodb://localhost:27017;RssDatabase;RssCollection",
         "API_ADDRESS": "http://localhost:8080",
-        "MAILING_KEY": "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",
+        "MAILING_KEY": "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",
         "ASPNETCORE_ENVIRONMENT": "Development",
         "PORT": "8080"
       },

@@ -1,18 +1,14 @@
-﻿using Application.Models;
+﻿using Application.Data;
+using Application.Models;
 using Application.Resources;
-using DatabaseManager;
-using DatabaseManager.Models;
-using Microsoft.AspNetCore.Http;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Controllers
 {
-	[Route(Constants.ROUTE_API_RSS)]
+	[Route(Constants.ROUTE_API_FEED)]
 	[ApiController]
 	[Produces(Constants.CONTENTTYPE_JSON)]
 	public class RssController : ControllerBase
@@ -25,15 +21,15 @@ namespace Application.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetDataAsync([FromQuery]string email, CancellationToken token=default)
+		public async Task<IActionResult> GetDataAsync([FromQuery] string email, CancellationToken token = default)
 		{
-			if(string.IsNullOrWhiteSpace(email))
+			if (string.IsNullOrWhiteSpace(email))
 			{
 				return BadRequest(Error.New(Strings.ERROR_INVALID_VALUE));
 			}
 
 			Record<string> record = await _database.GetAsyncBy((r) => r.AddressEmail == email, token);
-			if(record is null)
+			if (record is null)
 			{
 				return NotFound(Error.New(Strings.ERROR_MAIL_NOTFIGURED));
 			}
@@ -48,9 +44,9 @@ namespace Application.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> InsertOrUpdateAsync([FromBody]RssRequestBody body, CancellationToken token=default)
+		public async Task<IActionResult> InsertOrUpdateAsync([FromBody] RssRequestBody body, CancellationToken token = default)
 		{
-			if(body is null || !body.IsValid())
+			if (body is null || !body.IsValid())
 			{
 				return BadRequest(Error.New(Strings.ERROR_INVALID_VALUE));
 			}

@@ -5,15 +5,7 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{446371F0-21CB-42A1-8613-8C840E9BA4CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseManager", "DatabaseManager\DatabaseManager.csproj", "{E10382FD-047E-48B8-96D6-D7E9D925A5E9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailingManager", "MailingManager\MailingManager.csproj", "{5B826487-DDAF-463A-BB5E-E0AA814162E8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{869B414C-CF50-4581-BB88-258372C319FB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlService", "HtmlService\HtmlService.csproj", "{E2432D60-6876-45E2-A093-EFD6FB00ACEE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpService", "HttpService\HttpService.csproj", "{475AB041-1E1F-477C-B365-A19EBA63C97E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,26 +17,10 @@ Global
 		{446371F0-21CB-42A1-8613-8C840E9BA4CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{446371F0-21CB-42A1-8613-8C840E9BA4CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{446371F0-21CB-42A1-8613-8C840E9BA4CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E10382FD-047E-48B8-96D6-D7E9D925A5E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E10382FD-047E-48B8-96D6-D7E9D925A5E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E10382FD-047E-48B8-96D6-D7E9D925A5E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E10382FD-047E-48B8-96D6-D7E9D925A5E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B826487-DDAF-463A-BB5E-E0AA814162E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B826487-DDAF-463A-BB5E-E0AA814162E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B826487-DDAF-463A-BB5E-E0AA814162E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B826487-DDAF-463A-BB5E-E0AA814162E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{869B414C-CF50-4581-BB88-258372C319FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{869B414C-CF50-4581-BB88-258372C319FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{869B414C-CF50-4581-BB88-258372C319FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{869B414C-CF50-4581-BB88-258372C319FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E2432D60-6876-45E2-A093-EFD6FB00ACEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2432D60-6876-45E2-A093-EFD6FB00ACEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2432D60-6876-45E2-A093-EFD6FB00ACEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2432D60-6876-45E2-A093-EFD6FB00ACEE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{475AB041-1E1F-477C-B365-A19EBA63C97E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{475AB041-1E1F-477C-B365-A19EBA63C97E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{475AB041-1E1F-477C-B365-A19EBA63C97E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{475AB041-1E1F-477C-B365-A19EBA63C97E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Application
+﻿namespace Application
 {
-	internal struct Constants
+	public struct Constants
 	{
 		public struct ENVVAR
 		{
@@ -15,8 +10,9 @@ namespace Application
 			public const string CONNECTION_STRING = "CONNECTION_STRING";
 		}
 
-		public const string ROUTE_API_RSS = "api/rss";
+		public const string ROUTE_API_FEED = "api/rss";
 		public const string ROUTE_API_MAILING = "api/mailing";
 		public const string CONTENTTYPE_JSON = "application/json";
+		public const string CONTENTTYPE_HTML = "text/html";
 	}
 }

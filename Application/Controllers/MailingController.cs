@@ -1,11 +1,7 @@
-﻿using Application.Models;
+﻿using Application.Data;
+using Application.Models;
 using Application.Resources;
-using DatabaseManager;
-using DatabaseManager.Models;
-using HtmlService;
-using HttpService;
-using MailingManager;
-using MailingManager.Models;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
@@ -23,9 +19,9 @@ namespace Application.Controllers
 	{
 		private readonly IDatabase<string> _database;
 		private readonly IEmailSender _emailSender;
-		private readonly IHttp _httpClient;
+		private readonly HttpClient _httpClient;
 
-		public MailingController(IDatabase<string> database, IEmailSender emailSender, IHttp http)
+		public MailingController(IDatabase<string> database, IEmailSender emailSender, HttpClient http)
 		{
 			_database = database;
 			_emailSender = emailSender;
@@ -50,7 +46,7 @@ namespace Application.Controllers
 			{
 				Content = emailMsg,
 				StatusCode = 200,
-				ContentType = "text/html"
+				ContentType = Constants.CONTENTTYPE_HTML
 			};
 		}
 
@@ -68,7 +64,7 @@ namespace Application.Controllers
 				return NotFound(Error.New(Strings.ERROR_MAIL_NOTFIGURED));
 			}
 
-			Email email = new()
+			EmailSenderModel email = new()
 			{
 				FromAddress = "bartoszkopec0@gmail.com",
 				FromName = "Test receiver",
@@ -77,11 +73,8 @@ namespace Application.Controllers
 				Subject = "Test topic",
 				Content = emailMsg
 			};
-			bool status = await _emailSender.SendEmailAsync(email, token);
-			return Ok(new MailingResponseBody
-			{
-				Status = status
-			});
+			IActionResult sendResult = await _emailSender.SendEmailAsync(email, token);
+			return sendResult;
 		}
 
 		private async Task<string> GetEmailMessage(string email, CancellationToken token)
@@ -97,16 +90,13 @@ namespace Application.Controllers
 			//rssUrl: https://www.konflikty.pl/feed/
 			foreach (string rssUrl in record.RssSources)
 			{
-				HttpResponse response = await _httpClient.GetAsync(new HttpRequest
+				HttpResponseMessage response = await _httpClient.GetAsync(rssUrl, token);
+				if (!response.IsSuccessStatusCode)
 				{
-					Url = rssUrl
-				}, token);
-				if(response.Status != 200)
-				{
-					htmlTableRows.Add(HtmlMarkup.New("tr", HtmlMarkup.New("td", $"{rssUrl} niedostępne")));
+					htmlTableRows.Add(HtmlMarkup.New("tr", HtmlMarkup.New("td", $"{rssUrl} {Strings.UNAVAILABLE_FEED}")));
 					continue;
 				}
-				string xml = response.Content;
+				string xml = await response.Content.ReadAsStringAsync(token);
 				XmlSerializer serializer = new(typeof(XmlRssRoot));
 				using TextReader reader = new StringReader(xml);
 				XmlRssRoot result = (XmlRssRoot)serializer.Deserialize(reader);

@@ -1,30 +1,27 @@
+using Application.Data;
+using Application.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using DatabaseManager;
-using MailingManager;
-using HttpService;
 using Microsoft.Extensions.Configuration;
-using Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Application
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
-		{
-			Configuration = configuration;
-		}
+		public Startup(IConfiguration configuration) => Configuration = configuration;
 
 		public IConfiguration Configuration { get; }
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddHttp();
-			services.AddDatabase(Environment.GetEnvironmentVariable(Constants.ENVVAR.CONNECTION_STRING));
-			services.AddEmailSender(Environment.GetEnvironmentVariable(Constants.ENVVAR.MAILING_KEY));
+			string dbConnectionString = Environment.GetEnvironmentVariable(Constants.ENVVAR.CONNECTION_STRING);
+			string mailingKey = Environment.GetEnvironmentVariable(Constants.ENVVAR.MAILING_KEY);
+
+			services.AddHttpClient();
+			services.AddDatabase(dbConnectionString);
+			services.AddScoped<IEmailSender>((sp) => new SendGridEmailSender(mailingKey));
 			services.AddSingleton<ApiClient>();
 
 			services.AddControllers();
@@ -37,7 +34,6 @@ namespace Application
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			//app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseRouting();
 			app.UseEndpoints(endpoints =>

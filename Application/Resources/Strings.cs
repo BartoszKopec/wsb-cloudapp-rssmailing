@@ -8,5 +8,6 @@
 		public const string SUCCESS_SAVEDATA = "Data saved.";
 		public const string SUCCESS_SENDMAIL = "Mail sent.";
 		public const string ERROR_SENDMAIL = "Mail sending ended with failure.";
+		public const string UNAVAILABLE_FEED = "Feed is unavailable.";
 	}
 }

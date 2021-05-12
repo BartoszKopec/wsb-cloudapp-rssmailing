@@ -1,10 +1,7 @@
-﻿using DatabaseManager;
-using DatabaseManager.Models;
+﻿using Application.Data;
+using Application.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,16 +18,12 @@ namespace Tests.Units
 				return false;
 			}
 			record.Id = Guid.NewGuid().ToString();
-
-			lock (Records)
+			Records.Add(new Record<string>
 			{
-				Records.Add(new Record<string>
-				{
-					Id = record.Id,
-					AddressEmail = record.AddressEmail,
-					RssSources = record.RssSources
-				});
-			}
+				Id = record.Id,
+				AddressEmail = record.AddressEmail,
+				RssSources = record.RssSources
+			});
 			return true;
 		}
 
@@ -42,10 +35,7 @@ namespace Tests.Units
 				return false;
 			}
 
-			lock (Records)
-			{
-				Records.Remove(record);
-			}
+			Records.Remove(record);
 			return true;
 		}
 
@@ -57,31 +47,19 @@ namespace Tests.Units
 		public async Task<Record<string>> GetAsyncBy(Func<Record<string>, bool> predicate, CancellationToken token)
 		{
 			await Task.Delay(50, token);
-			Record<string> record = Records.Find((r)=>predicate(r));
+			Record<string> record = Records.Find((r) => predicate(r));
 			return record;
-			//Task<Record<string>> task = new(() =>
-			//{
-			//	Record<string> record = Records.Find(predicate);
-			//	return record;
-			//}, token);
-			//return task;
 		}
 
 		public async Task<bool> UpdateAsync(Record<string> record, CancellationToken token)
 		{
-			Record<string> dbrecord = await GetAsyncBy((r)=>r.Id == record.Id && r.AddressEmail == record.AddressEmail, token);
+			Record<string> dbrecord = await GetAsyncBy((r) => r.Id == record.Id && r.AddressEmail == record.AddressEmail, token);
 			if (record != null)
 			{
 				return false;
 			}
 
-			lock (Records)
-			{
-				lock (dbrecord)
-				{
-					dbrecord.RssSources = record.RssSources;
-				}
-			}
+			dbrecord.RssSources = record.RssSources;
 			return true;
 		}
 	}

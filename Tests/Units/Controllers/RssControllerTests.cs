@@ -1,14 +1,12 @@
 ﻿using Application.Controllers;
+using Application.Data;
 using Application.Models;
 using Application.Resources;
-using DatabaseManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Tests.Units.Controllers
@@ -56,9 +54,9 @@ namespace Tests.Units.Controllers
 			//Assert
 			Assert.IsType<NotFoundObjectResult>(result);
 			Assert.NotNull(result);
-			NotFoundObjectResult notFoundObjectResult= result as NotFoundObjectResult;
+			NotFoundObjectResult notFoundObjectResult = result as NotFoundObjectResult;
 			var responseBody = notFoundObjectResult.Value;
-			
+
 			Assert.NotNull(responseBody);
 			Assert.IsType<Error>(responseBody);
 			Error body = responseBody as Error;
@@ -88,7 +86,7 @@ namespace Tests.Units.Controllers
 			Assert.NotNull(result);
 			OkObjectResult okObjectResult = result as OkObjectResult;
 			var responseBody = okObjectResult.Value;
-			
+
 			Assert.NotNull(responseBody);
 			Assert.IsType<RssResponseBody>(responseBody);
 			RssResponseBody body = responseBody as RssResponseBody;
@@ -107,14 +105,14 @@ namespace Tests.Units.Controllers
 			//Arrange
 			RssRequestBody body = new RssRequestBody
 			{
-				 AddressEmail = email
-				 //RssUrls omnitted - might be null or empty
+				AddressEmail = email
+				//RssUrls omnitted - might be null or empty
 			};
 			CommonInit();
 			Assert.Empty(_database.Records);
 
 			//Act
-			IActionResult result = Controller.InsertOrUpdateAsync(useAssignedBody ? body:null, _token).Result;
+			IActionResult result = Controller.InsertOrUpdateAsync(useAssignedBody ? body : null, _token).Result;
 
 			//Assert
 			Assert.IsType<BadRequestObjectResult>(result);
@@ -123,15 +121,15 @@ namespace Tests.Units.Controllers
 			var responseBody = badRequestObjectResult.Value;
 			ControllerAssert.IsValidErrorResult(responseBody, Strings.ERROR_INVALID_VALUE);
 		}
-		
+
 		[Fact]
 		public void InsertRss_With_NewRecord()
 		{
 			//Arrange
 			RssRequestBody body = new()
 			{
-				 AddressEmail = "foobar",
-				 Urls = new List<string> { "url" }
+				AddressEmail = "foobar",
+				Urls = new List<string> { "url" }
 			};
 			CommonInit();
 			Assert.Empty(_database.Records);
@@ -178,7 +176,7 @@ namespace Tests.Units.Controllers
 			Assert.Equal(body.Urls, record.RssSources);
 		}
 
-		protected void CommonInit(params Record<string>[] records)
+		protected override void CommonInit(params Record<string>[] records)
 		{
 			_database = new();
 			if (records != null)

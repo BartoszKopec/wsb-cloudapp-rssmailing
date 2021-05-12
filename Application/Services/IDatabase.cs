@@ -1,12 +1,9 @@
-﻿using DatabaseManager.Models;
+﻿using Application.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DatabaseManager
+namespace Application.Services
 {
 	public interface IDatabase<TId>
 	{
